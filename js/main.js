@@ -17,8 +17,24 @@ const searchStates = async searchText => {
 			return state.name.match(regex) || state.abbr.match(regex);
 		});
 
-		console.log(matches);
+		// now, we need to display our matches in the HTML
+		outputHTML(matches);
+	} else {
+		matchList.innerHTML = '';
 	}
+}
+
+const outputHTML = matches => {
+	// map through matches array, make an array of html
+	// join turns it into an actual string which we can put into the DOM
+	let html = matches.map((match) =>
+		`<div class="card card-body mb-4">
+			<h4>${match.name} (${match.abbr}) - <span class="text-warning">${match.capital}</span><h4>
+			<small>Lat: ${match.lat} / Long: ${match.long}</small>
+		</div>`
+	).join('')
+
+	matchList.innerHTML = html;
 }
 
 // Event Listeners
